@@ -1,0 +1,1 @@
+仅对combined_data_1 的数据部分进行训练，使用ALS算法，隐特征个数为3，迭代3次，在linux环境下运行，对probe.txt中movieID没有出现在combined_data_1 的部分予以剔除，剩余部分进行预测，预测结果放入predict文件中，并进行rmse计算，计算结果放在rmse文件中
