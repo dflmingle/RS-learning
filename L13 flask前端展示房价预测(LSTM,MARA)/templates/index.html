@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HousePrice</title>
+    <!-- 引入 echarts.js -->
+    <script src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+</head>
+
+
+
+<div id="main" style="width:1200px;">
+	<h1 align="center">{{returnData['area']}}</h1>
+
+
+
+ <div id="left" style="width:300px;float:left;">
+
+{% block content %}
+    
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+	<p>  {{ '北京'}}      {{ form.select1() }}      {{ form.submit1() }}  </p>
+	<p>  {{ '广州'}}      {{ form.select2() }}      {{ form.submit2() }}  </p>
+	<p>  {{ '上海'}}      {{ form.select3() }}      {{ form.submit3() }}  </p>
+	<p>  {{ '深圳'}}      {{ form.select4() }}      {{ form.submit4() }}  </p>
+
+    </form>
+{% endblock %}
+
+</div>
+
+<div id="right" style="width:900px;float:left;">   
+  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main1" style="width: 900px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main1'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+		    text: '房价'
+            },
+            tooltip: {
+	     trigger:'axis'
+	    },
+            legend: {
+                data: ['预测值','实际值']
+            },
+            xAxis: {
+		    data: {{returnData['index']|safe}}
+            },
+            yAxis: {},
+            series: [{
+                name: '预测值',
+                type: 'line',
+		    data: {{returnData['forecast']|safe}}
+	    },{
+	        name: '实际值',
+                type: 'line',
+		    data:{{ returnData['truth']|safe}}
+	    
+	    }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>  
+   
+
+</div>
+
+</div>
